@@ -5,8 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AfasProfitAnonymizer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Afas Profit Anonymizer" Height="500" Width="800">
+    <Grid x:Name="MainGrid" Background="GhostWhite">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock x:Name="Title" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+            <Bold>Afas Profit Anonymizer</Bold>
+        </TextBlock>
+
+        <TextBlock x:Name="StepFeedback" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">
+            Niets aan het anonimiseren
+        </TextBlock>
+
+        <ProgressBar x:Name="ProgressFeedback" Minimum="0" Maximum="100" Grid.Row="3" Grid.Column="0" Margin="10 0">
+            
+        </ProgressBar>
+
+        <TextBlock x:Name="TimeFeedback" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">
+            Nog geen tijd verstreken
+        </TextBlock>
+
+        <ScrollViewer Grid.Row="5" Grid.RowSpan="8">
+            <TextBlock x:Name="LogFeedback" Background="White"  FontFamily="Courier New" TextWrapping="Wrap">
+            Hallo
+            </TextBlock>
+        </ScrollViewer>
         
+
+        <Button x:Name="ClearLogButton" Click="ClearConsole" Grid.Row="13" Grid.Column="0" Width="200" HorizontalAlignment="Left">Verwijder de log</Button>
+        <Button x:Name="ViewLogButton" Grid.Row="13" Grid.Column="0" Width="200" HorizontalAlignment="Right">Bekijk de log</Button>
+
+        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Servernaam:</TextBlock>
+        <TextBox x:Name="ServerNameInput" Grid.Row="2" Grid.Column="2" Margin="10 5"></TextBox>
+
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Naam te anonimiseren database:</TextBlock>
+        <TextBox x:Name="TargetDatabaseNameInput" Grid.Row="3" Grid.Column="2" Margin="10 5"></TextBox>
+
+        <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Naam te vergelijken database:</TextBlock>
+        <TextBox x:Name="ComparisonDatabaseNameInput" IsEnabled="False" Grid.Row="5" Grid.Column="2" Margin="10 5"></TextBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Anonimiseren zonder vergelijking:</TextBlock>
+        <CheckBox x:Name="ShouldCompareInput" IsChecked="True" Checked="HandleChangeShouldCompare" Unchecked="HandleChangeShouldCompare" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+        
+        <TextBlock Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Kopie maken van database:</TextBlock>
+        <CheckBox x:Name="ShouldCreateCopy" IsChecked="True" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+
+        <Button x:Name="TestConnection" Click="HandleTestConnection" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Width="200" >Test Connectie</Button>
+        <Button x:Name="StartAnonymizing" IsEnabled="False" Click="HandleStartAnonymizing" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Width="200" >Start Anonimiseren</Button>
     </Grid>
+
+    
 </Window>
