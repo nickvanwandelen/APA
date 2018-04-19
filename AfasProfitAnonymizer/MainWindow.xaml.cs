@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using AfasAnonymizerConsole;
+using AfasAnonymizerConfiguration;
 
 namespace AfasProfitAnonymizer
 {
@@ -23,94 +15,103 @@ namespace AfasProfitAnonymizer
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = AnonConsole.Message;
         }
+
 
         #region AnonymizeHandling
         private void HandleTestConnection(object sender, RoutedEventArgs e)
         {
-            ClearConsole();
-            WriteToConsole("Testing connection");
+            AnonConsole.ClearConsole();
+
+            bool comparison = (bool)ShouldCompareInput.IsChecked;
+            if (!comparison)
+            {
+                try
+                {
+                    int percentage = Int32.Parse(ComparisonPercentageInput.Text);
+
+                    if (percentage <= 0 || percentage > 100)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception)
+                {
+                    AnonConsole.WriteToConsole("Percentage is niet een geldig nummer", 2);
+                    return;
+                }
+            }
+            
+
+            AnonConsole.WriteToConsole("Testing connection");
             int resultCode = DatabaseTester.TestConnection(this.ServerNameInput.Text, this.TargetDatabaseNameInput.Text, this.ComparisonDatabaseNameInput.Text, (bool)this.ShouldCompareInput.IsChecked);
 
             switch (resultCode)
             {
                 case -1:
-                    WriteToConsole("Niet alle velden zijn ingevuld", 2);
+                    AnonConsole.WriteToConsole("Niet alle velden zijn ingevuld", 2);
                     StartAnonymizing.IsEnabled = false;
                     break;
                 case 0:
-                    WriteToConsole("Connectie naar server en database(s) succesvol!", 0);
+                    AnonConsole.WriteToConsole("Connectie naar server en database(s) succesvol!", 0);
                     StartAnonymizing.IsEnabled = true;
                     break;
                 case 1:
-                    WriteToConsole("Connectie naar server " + ServerNameInput.Text + " gefaald", 2);
+                    AnonConsole.WriteToConsole("Connectie naar server " + ServerNameInput.Text + " gefaald", 2);
                     StartAnonymizing.IsEnabled = false;
                     break;
                 case 2:
-                    WriteToConsole("Connectie naar " + this.TargetDatabaseNameInput.Text + " gefaald", 2);
+                    AnonConsole.WriteToConsole("Connectie naar " + this.TargetDatabaseNameInput.Text + " gefaald", 2);
                     StartAnonymizing.IsEnabled = false;
                     break;
                 case 3:
-                    WriteToConsole("Connectie naar " + this.ComparisonDatabaseNameInput.Text + " gefaald", 2);
+                    AnonConsole.WriteToConsole("Connectie naar " + this.ComparisonDatabaseNameInput.Text + " gefaald", 2);
+                    StartAnonymizing.IsEnabled = false;
                     break;
                 case 5:
-                    WriteToConsole("Connectie naar beide databases gefaald", 2);
+                    AnonConsole.WriteToConsole("Connectie naar beide databases gefaald", 2);
                     StartAnonymizing.IsEnabled = false;
                     break;
             }
+            StartAnonymizing.IsEnabled = true;
         }
 
         private void HandleStartAnonymizing(object sender, RoutedEventArgs e)
         {
-            WriteToConsole("Appelsap");
+            ServerNameInput.IsEnabled = false;
+            TargetDatabaseNameInput.IsEnabled = false;
+            ComparisonDatabaseNameInput.IsEnabled = false;
+            ShouldCompareInput.IsEnabled = false;
+            ShouldCreateCopy.IsEnabled = false;
+
+            Config.SERVERNAME = ServerNameInput.Text;
+            Config.TARGETDATABASE = TargetDatabaseNameInput.Text;
+            Config.COMPAREDATABASE = ComparisonDatabaseNameInput.Text;
+
+            if (ComparisonPercentageInput.Text.Equals(string.Empty))
+            {
+                Config.PERCENTAGEMATCH = -1;
+            }
+            else
+            {
+                Config.PERCENTAGEMATCH = Int32.Parse(ComparisonPercentageInput.Text);
+            }
+            
+
+            bool comparison = (bool)ShouldCompareInput.IsChecked;
+            bool copy = (bool)ShouldCreateCopy.IsChecked;
+
+            Config.SHOULDCOMPAREDATABASE = comparison;
+            Config.SHOULDCOPYDATABASE = copy;
+            Config.Start();
         }
         #endregion
 
         #region LoggingHandling
-        /// <summary>
-        /// Writes an object.ToString() to the logging output for the user to see.
-        /// </summary>
-        /// <param name="objectToWrite">The object who's ToString() will be showed</param>
-        /// <param name="severityOfMessage">The severity of the message
-        /// -1 = no severity prefix
-        /// 0 (default) = INFO.
-        /// 1 = WARNING.
-        /// 2 = ERROR.
-        /// 3 = FATAL ERROR.
-        /// </param>
-        public void WriteToConsole(object objectToWrite, int severityOfMessage = 0)
-        {
-            string _severity = string.Empty;
-            switch (severityOfMessage)
-            {
-                case -1:
-                    _severity = string.Empty;
-                    break;
-                case 0:
-                    _severity = "INFO: ";
-                    break;
-                case 1:
-                    _severity = "WARNING: ";
-                    break;
-                case 2:
-                    _severity = "ERROR: ";
-                    break;
-                case 3:
-                    _severity = "FATAL ERROR: ";
-                    break;
-            }
-
-            this.LogFeedback.Text += "\n" + _severity + objectToWrite.ToString();
-        }
-
-        public void ClearConsole()
-        {
-            this.LogFeedback.Text = string.Empty;
-        }
-
         private void ClearConsole(object sender, RoutedEventArgs e)
         {
-            this.LogFeedback.Text = string.Empty;
+            AnonConsole.ClearConsole();
         }
         #endregion
 
@@ -120,11 +121,19 @@ namespace AfasProfitAnonymizer
             if(ShouldCompareInput.IsChecked == null)
             {
                 ComparisonDatabaseNameInput.IsEnabled = false;
+                ComparisonPercentageInput.IsEnabled = false;
             }
             else
             {
                 ComparisonDatabaseNameInput.IsEnabled = (bool)!ShouldCompareInput.IsChecked;
+                ComparisonPercentageInput.IsEnabled = (bool)!ShouldCompareInput.IsChecked;
             }
+        }
+
+        private void CheckForNumberInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            e.Handled = Regex.IsMatch(tb.Text, "[^0-9.-]+");
         }
         #endregion
     }

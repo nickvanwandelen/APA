@@ -99,5 +99,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AfasAnonymizerConfiguration\AfasAnonymizerConfiguration.csproj">
+      <Project>{bf7d1415-9bf2-4048-beb2-46e987961366}</Project>
+      <Name>AfasAnonymizerConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AfasAnonymizerConsole\AfasAnonymizerConsole.csproj">
+      <Project>{2859e5c2-f66d-4406-ac49-8080480443ad}</Project>
+      <Name>AfasAnonymizerConsole</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

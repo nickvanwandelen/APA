@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AfasProfitAnonymizer", "AfasProfitAnonymizer\AfasProfitAnonymizer.csproj", "{566D4D14-3D4D-466F-A33B-5E8602468A2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AfasAnonymizerClient", "AfasProfitAnonymizer\AfasAnonymizerClient.csproj", "{566D4D14-3D4D-466F-A33B-5E8602468A2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AfasAnonymizerConsole", "AfasAnonymizerConsole\AfasAnonymizerConsole.csproj", "{2859E5C2-F66D-4406-AC49-8080480443AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AfasPersonAnonymizer", "AfasPersonAnonymizer\AfasPersonAnonymizer.csproj", "{BAFBD1B7-04A6-49FC-B349-1E09CF5E2473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AfasAnonymizerConfiguration", "AfasAnonymizerConfiguration\AfasAnonymizerConfiguration.csproj", "{BF7D1415-9BF2-4048-BEB2-46E987961366}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{566D4D14-3D4D-466F-A33B-5E8602468A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{566D4D14-3D4D-466F-A33B-5E8602468A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{566D4D14-3D4D-466F-A33B-5E8602468A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2859E5C2-F66D-4406-AC49-8080480443AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2859E5C2-F66D-4406-AC49-8080480443AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2859E5C2-F66D-4406-AC49-8080480443AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2859E5C2-F66D-4406-AC49-8080480443AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAFBD1B7-04A6-49FC-B349-1E09CF5E2473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAFBD1B7-04A6-49FC-B349-1E09CF5E2473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAFBD1B7-04A6-49FC-B349-1E09CF5E2473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAFBD1B7-04A6-49FC-B349-1E09CF5E2473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7D1415-9BF2-4048-BEB2-46E987961366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7D1415-9BF2-4048-BEB2-46E987961366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7D1415-9BF2-4048-BEB2-46E987961366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7D1415-9BF2-4048-BEB2-46E987961366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
